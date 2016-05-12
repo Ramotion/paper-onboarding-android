@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/onboardingRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- BG COLORS CONTAINER -->
+    <FrameLayout
+        android:id="@+id/onboardingBackgroundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- MAIN LAYOUT SECTION -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <!-- ICON CONTAINER -->
+            <FrameLayout
+                android:id="@+id/onboardingContentIconContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+
+            <!-- TEXT CONTAINER -->
+            <FrameLayout
+                android:id="@+id/onboardingContentTextContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- PAGER ICONS CONTAINER -->
+    <LinearLayout
+        android:id="@+id/onboardingPagerIconsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="25dp"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" />
+
+
+</RelativeLayout>
