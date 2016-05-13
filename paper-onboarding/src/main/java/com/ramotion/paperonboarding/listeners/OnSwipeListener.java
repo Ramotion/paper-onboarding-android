@@ -5,7 +5,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class OnSwipeListener implements View.OnTouchListener {
+public abstract class OnSwipeListener implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
 
@@ -19,15 +19,19 @@ public class OnSwipeListener implements View.OnTouchListener {
     }
 
     public void onSwipeRight() {
+        // do nothing here
     }
 
     public void onSwipeLeft() {
+        // do nothing here
     }
 
     public void onSwipeTop() {
+        // do nothing here
     }
 
     public void onSwipeBottom() {
+        // do nothing here
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {

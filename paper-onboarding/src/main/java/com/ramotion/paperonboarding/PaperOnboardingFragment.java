@@ -20,7 +20,6 @@ public class PaperOnboardingFragment extends Fragment {
 
     private static final String ELEMENTS_PARAM = "elements";
 
-    private PaperOnboardingEngine mPaperOnboardingEngine;
     private PaperOnboardingOnChangeListener mOnChangeListener;
     private PaperOnboardingOnRightOutListener mOnRightOutListener;
     private PaperOnboardingOnLeftOutListener mOnLeftOutListener;
@@ -49,7 +48,7 @@ public class PaperOnboardingFragment extends Fragment {
         View view = inflater.inflate(R.layout.onboarding_main_layout, container, false);
 
         // create engine for onboarding element
-        mPaperOnboardingEngine = new PaperOnboardingEngine(view.findViewById(R.id.onboardingRootView), mElements, getActivity().getApplicationContext());
+        PaperOnboardingEngine mPaperOnboardingEngine = new PaperOnboardingEngine(view.findViewById(R.id.onboardingRootView), mElements, getActivity().getApplicationContext());
         // set listeners
         mPaperOnboardingEngine.setOnChangeListener(mOnChangeListener);
         mPaperOnboardingEngine.setOnLeftOutListener(mOnLeftOutListener);

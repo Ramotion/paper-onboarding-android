@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     // scale factor for converting dp to px
-    final float dpToPixelsScaleFactor;
+    private final float dpToPixelsScaleFactor;
 
     // main layout parts
     private final RelativeLayout mRootLayout;
@@ -101,6 +101,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
             public void onSwipeRight() {
                 toggleContent(true);
             }
+
         });
 
         mRootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -127,16 +128,16 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * Calculate new position for pager without using pager's current position(like .getX())
      * this method allows to avoid incorrect position values while animation of pager in progress
      *
-     * @param activeElementIndex index of newly active element (from 0)
+     * @param newActiveElement index of newly active element (from 0)
      * @return new X position for pager bar
      */
-    protected int calculateNewPagerPosition(int activeElementIndex) {
-        activeElementIndex++;
-        if (activeElementIndex <= 0)
-            activeElementIndex = 1;
+    protected int calculateNewPagerPosition(int newActiveElement) {
+        newActiveElement++;
+        if (newActiveElement <= 0)
+            newActiveElement = 1;
         int pagerActiveElemCenterPosX = mPagerElementActiveSize / 2
-                + activeElementIndex * mPagerElementLeftMargin
-                + (activeElementIndex - 1) * (mPagerElementNormalSize + mPagerElementRightMargin);
+                + newActiveElement * mPagerElementLeftMargin
+                + (newActiveElement - 1) * (mPagerElementNormalSize + mPagerElementRightMargin);
         return mRootLayout.getWidth() / 2 - pagerActiveElemCenterPosX;
     }
 
