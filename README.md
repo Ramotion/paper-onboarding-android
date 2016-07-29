@@ -4,7 +4,7 @@
 [![Twitter](https://img.shields.io/badge/Twitter-@Ramotion-blue.svg?style=flat)](http://twitter.com/Ramotion)
 
 ## About
-This project is maintained by Ramotion, an agency specialized in building dedicated engineering teams and developing custom software.<br><br> [Contact our team](https://ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us) and we’ll help you work with the best engineers from Eastern Europe.
+This project is maintained by Ramotion, an agency specialized in building dedicated engineering teams and developing custom software.<br><br> [Contact our team](https://business.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us) and we’ll help you work with the best engineers from Eastern Europe.
 
 ![Animation](onboarding_preview.gif)
 
