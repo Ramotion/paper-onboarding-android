@@ -1,10 +1,10 @@
 package com.ramotion.paperonboarding.examples.fragment;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ramotion.paperonboarding.PaperOnboardingFragment;
@@ -21,7 +21,7 @@ public class FragmentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragments_activity_layout);
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         final PaperOnboardingFragment onBoardingFragment = PaperOnboardingFragment.newInstance(getDataForOnboarding());
 
