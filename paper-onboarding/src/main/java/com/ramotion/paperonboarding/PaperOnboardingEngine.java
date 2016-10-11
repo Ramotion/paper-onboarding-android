@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +108,12 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         mRootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mRootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mRootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    mRootLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
 
                 mPagerElementActiveSize = mPagerIconsContainer.getHeight();
                 mPagerElementNormalSize = Math.min(mPagerIconsContainer.getChildAt(0).getHeight(),
@@ -260,10 +266,16 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         float finalRadius = mRootLayout.getWidth() > mRootLayout.getHeight() ? mRootLayout.getWidth() : mRootLayout.getHeight();
 
         AnimatorSet bgAnimSet = new AnimatorSet();
-        Animator circularReveal = ViewAnimationUtils.createCircularReveal(bgColorView, pos[0], pos[1], 0, finalRadius);
         Animator fadeIn = ObjectAnimator.ofFloat(bgColorView, "alpha", 0, 1);
-        circularReveal.setInterpolator(new AccelerateInterpolator());
-        bgAnimSet.playTogether(circularReveal, fadeIn);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(bgColorView, pos[0], pos[1], 0, finalRadius);
+            circularReveal.setInterpolator(new AccelerateInterpolator());
+            bgAnimSet.playTogether(circularReveal, fadeIn);
+        } else {
+            bgAnimSet.playTogether(fadeIn);
+        }
+
         bgAnimSet.setDuration(ANIM_BACKGROUND_TIME);
         bgAnimSet.addListener(new AnimatorEndListener() {
             @Override
