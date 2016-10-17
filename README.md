@@ -6,7 +6,7 @@
 
 ## About
 This project is maintained by Ramotion, Inc.<br>
-We specialize in the designing and coding of custom UI for Mobile Apps and Websites.<br><br>**Looking for developers for your project?** [[▶︎CONTACT OUR TEAM◀︎](http://business.ramotion.com/#Get_in_Touch?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us)]
+We specialize in the designing and coding of custom UI for Mobile Apps and Websites.<br><br>**Looking for developers for your project?** [[▶︎CONTACT OUR TEAM◀︎](http://business.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us/#Get_in_Touch)]
 
 
 [![Animation](onboarding_preview.gif)](https://dribbble.com/shots/2694049-Pagination-Controller-Open-Source)
