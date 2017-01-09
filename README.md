@@ -24,18 +24,18 @@ Just download the package from [here](http://central.maven.org/maven2/com/ramoti
 ​
 Gradle:
 ```groovy
-'com.ramotion.paperonboarding:paper-onboarding:1.0.0'
+'com.ramotion.paperonboarding:paper-onboarding:1.1.0'
 ```
 SBT:
 ```scala
-libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.0.0"
+libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.1.0"
 ```
 Maven:
 ```xml
 <dependency>
     <groupId>com.ramotion.paperonboarding</groupId>
     <artifactId>paper-onboarding</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <type>aar</type>
 </dependency>
 ```
