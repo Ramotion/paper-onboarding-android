@@ -13,7 +13,7 @@ We specialize in the designing and coding of custom UI for Mobile Apps and Websi
 
 [![Animation](onboarding_preview.gif)](https://dribbble.com/shots/2694049-Pagination-Controller-Open-Source)
 
-The [Android mockup](https://store.ramotion.com/product/htc-one-a9-mockups?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android) available [here](https://store.ramotion.com/product/htc-one-a9-mockups?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android).
+The [Android mockup](https://store.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android) available [here](https://store.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android).
 
 ## Requirements
 ​
