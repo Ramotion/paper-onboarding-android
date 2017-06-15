@@ -13,27 +13,27 @@ The [Android mockup](https://store.ramotion.com/product/htc-one-a9-mockups?utm_s
 
 ## Requirements
 ​
-- Android 5.0 Lollipop (API lvl 21) or greater
+- Android 4.0.3 IceCreamSandwich (API lvl 15) or greater
 - Your favorite IDE
 
 ## Installation
 ​
-Just download the package from [here](http://central.maven.org/maven2/com/ramotion/paperonboarding/paper-onboarding/1.0.0/paper-onboarding-1.0.0.aar) and add it to your project classpath, or just use the maven repo:
+Just download the package from [here](http://central.maven.org/maven2/com/ramotion/paperonboarding/paper-onboarding/1.1.1/paper-onboarding-1.1.1.aar) and add it to your project classpath, or just use the maven repo:
 ​
 Gradle:
 ```groovy
-'com.ramotion.paperonboarding:paper-onboarding:1.0.0'
+'com.ramotion.paperonboarding:paper-onboarding:1.1.1'
 ```
 SBT:
 ```scala
-libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.0.0"
+libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.1.1"
 ```
 Maven:
 ```xml
 <dependency>
     <groupId>com.ramotion.paperonboarding</groupId>
     <artifactId>paper-onboarding</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.1</version>
     <type>aar</type>
 </dependency>
 ```
