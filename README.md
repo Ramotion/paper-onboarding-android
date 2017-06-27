@@ -1,4 +1,4 @@
-[![header](./header.png)](https://business.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-logo)
+[![header](./header.png)](https://ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-logo)
 # Paper Onboarding for Android
 [![CircleCI](https://circleci.com/gh/Ramotion/paper-onboarding-android.svg?style=svg)](https://circleci.com/gh/Ramotion/paper-onboarding-android)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ed1eb5c89dfc45eabb80e93c6a124012)](https://www.codacy.com/app/Ramotion/paper-onboarding-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ramotion/paper-onboarding-android&amp;utm_campaign=Badge_Grade)
@@ -8,7 +8,7 @@
 This project is maintained by Ramotion, Inc.<br>
 We specialize in the designing and coding of custom UI for Mobile Apps and Websites.<br><br>**Looking for developers for your project?** 
 
-<a href="https://business.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us/#Get_in_Touch" > <img src="https://github.com/Ramotion/navigation-stack/raw/master/contact_our_team@2x.png" width="150" height="30"></a>
+<a href="https://ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android-contact-us/#Get_in_Touch" > <img src="https://github.com/Ramotion/navigation-stack/raw/master/contact_our_team@2x.png" width="150" height="30"></a>
 
 
 [![Animation](onboarding_preview.gif)](https://dribbble.com/shots/2694049-Pagination-Controller-Open-Source)
