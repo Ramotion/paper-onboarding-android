@@ -104,8 +104,8 @@ See [LICENSE](./LICENSE) for details.
 
 <br>
 
-# Get the Showroom App for mobil to give it a try
-Try our UI components in our mobil app. Contact us if interested.
+# Get the Showroom App for Android to give it a try
+Try our UI components in our mobile app. Contact us if interested.
 
 <a href="https://play.google.com/store/apps/details?id=com.ramotion.showroom" >
 <img src="https://raw.githubusercontent.com/Ramotion/react-native-circle-menu/master/google_play@2x.png" width="104" height="34"></a>
