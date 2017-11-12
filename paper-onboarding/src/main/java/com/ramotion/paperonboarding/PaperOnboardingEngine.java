@@ -468,8 +468,12 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         ViewGroup contentTextView = (ViewGroup) vi.inflate(R.layout.onboarding_text_content_layout, mContentTextContainer, false);
         TextView contentTitle = (TextView) contentTextView.getChildAt(0);
         contentTitle.setText(PaperOnboardingPage.getTitleText());
+        contentTitle.setTextColor(PaperOnboardingPage.getTitleColor());
+        contentTitle.setTypeface(PaperOnboardingPage.getTextFont());
         TextView contentText = (TextView) contentTextView.getChildAt(1);
         contentText.setText(PaperOnboardingPage.getDescriptionText());
+        contentText.setTextColor(PaperOnboardingPage.getDescriptionColor());
+        contentText.setTypeface(PaperOnboardingPage.getDescriptionFont());
         return contentTextView;
     }
 

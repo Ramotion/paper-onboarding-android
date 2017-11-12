@@ -52,16 +52,45 @@ Paper Onboarding is a simple and easy to use onboarding slider for your app. You
 
 1 Use `PaperOnboardingPage` to prepare your data for slider:
 ```java
-PaperOnboardingPage scr1 = new PaperOnboardingPage("Hotels",
-	"All hotels and hostels are sorted by hospitality rating",
-        Color.parseColor("#678FB4"), R.drawable.hotels, R.drawable.key);
-PaperOnboardingPage scr2 = new PaperOnboardingPage("Banks",
-	"We carefully verify all banks before add them into the app",
-        Color.parseColor("#65B0B4"), R.drawable.banks, R.drawable.wallet);
-PaperOnboardingPage scr3 = new PaperOnboardingPage("Stores",
-	"All local stores are categorized for your convenience",
-        Color.parseColor("#9B90BC"), R.drawable.stores, R.drawable.shopping_cart);
+// ("BIG_IMAGE", "Title", "Description text", "IconName", "BackgroundColor", textColor, DescriptionColor, textFont, DescriptionFont)
 
+PaperOnboardingPage scr1 = new PaperOnboardingPage(
+     R.drawable.hotels, 
+	 "Hotels",
+	"All hotels and hostels are sorted by hospitality rating",
+	R.drawable.key,
+	Color.parseColor("#678FB4"),
+	Color.parseColor("#FFFFFF"),
+	Color.parseColor("#FFFFFF"),
+	Typeface.SANS_SERIF,
+	Typeface.SANS_SERIF
+);
+		
+		
+PaperOnboardingPage scr2 = new PaperOnboardingPage(
+    R.drawable.banks,
+	"Banks",
+	"We carefully verify all banks before add them into the app",
+	R.drawable.wallet,
+	Color.parseColor("#65B0B4"),
+	Color.parseColor("#FFFFFF"),
+	Color.parseColor("#FFFFFF"),
+	Typeface.SANS_SERIF,
+	Typeface.SANS_SERIF
+);
+		
+		
+PaperOnboardingPage scr3 = new PaperOnboardingPage(
+    R.drawable.stores,
+	"Stores",
+	"All local stores are categorized for your convenience",
+	R.drawable.shopping_cart,
+	Color.parseColor("#9B90BC"),
+	Color.parseColor("#FFFFFF"),
+	Color.parseColor("#FFFFFF"),
+	Typeface.SANS_SERIF,
+	Typeface.SANS_SERIF
+);
 ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
 elements.add(scr1);
 elements.add(scr2);
