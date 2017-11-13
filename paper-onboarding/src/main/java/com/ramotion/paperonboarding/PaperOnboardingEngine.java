@@ -35,35 +35,35 @@ import java.util.ArrayList;
 public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     // scale factor for converting dp to px
-    private final float dpToPixelsScaleFactor;
+    protected final float dpToPixelsScaleFactor;
 
     // main layout parts
-    private final RelativeLayout mRootLayout;
-    private final FrameLayout mContentTextContainer;
-    private final FrameLayout mContentIconContainer;
-    private final FrameLayout mBackgroundContainer;
-    private final LinearLayout mPagerIconsContainer;
+    protected final RelativeLayout mRootLayout;
+    protected final FrameLayout mContentTextContainer;
+    protected final FrameLayout mContentIconContainer;
+    protected final FrameLayout mBackgroundContainer;
+    protected final LinearLayout mPagerIconsContainer;
 
-    private final RelativeLayout mContentRootLayout;
-    private final LinearLayout mContentCenteredContainer;
+    protected final RelativeLayout mContentRootLayout;
+    protected final LinearLayout mContentCenteredContainer;
 
     // application context
-    private final Context mAppContext;
+    protected Context mAppContext;
 
     // state variables
-    private ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
-    private int mActiveElementIndex = 0;
+    protected ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
+    protected int mActiveElementIndex = 0;
 
     // params for Pager position calculations, virtually final, but initializes in onGlobalLayoutListener
-    private int mPagerElementActiveSize;
-    private int mPagerElementNormalSize;
-    private int mPagerElementLeftMargin;
-    private int mPagerElementRightMargin;
+    protected int mPagerElementActiveSize;
+    protected int mPagerElementNormalSize;
+    protected int mPagerElementLeftMargin;
+    protected int mPagerElementRightMargin;
 
     // Listeners
-    private PaperOnboardingOnChangeListener mOnChangeListener;
-    private PaperOnboardingOnRightOutListener mOnRightOutListener;
-    private PaperOnboardingOnLeftOutListener mOnLeftOutListener;
+    protected PaperOnboardingOnChangeListener mOnChangeListener;
+    protected PaperOnboardingOnRightOutListener mOnRightOutListener;
+    protected PaperOnboardingOnLeftOutListener mOnLeftOutListener;
 
     /**
      * Main constructor for create a Paper Onboarding Engine
