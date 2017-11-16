@@ -78,13 +78,11 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
         this.mElements.addAll(contentElements);
         this.mAppContext = appContext.getApplicationContext();
-
         mRootLayout = (RelativeLayout) rootLayout;
-        mContentTextContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentTextContainer);
-        mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
-        mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
-        mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
-
+        mContentTextContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingContentTextContainer", "id", appContext.getPackageName()));
+        mContentIconContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingContentIconContainer", "id", appContext.getPackageName()));
+        mBackgroundContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingBackgroundContainer", "id", appContext.getPackageName()));
+        mPagerIconsContainer = (LinearLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingPagerIconsContainer", "id", appContext.getPackageName()));
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
 
@@ -398,14 +396,22 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // fade out old new element icon
         final View oldActiveIcon = oldActiveItem.getChildAt(1);
         Animator oldActiveIconFadeOut = ObjectAnimator.ofFloat(oldActiveIcon, "alpha", 1, 0);
-
         // fade in old element shape
         final ImageView oldActiveShape = (ImageView) oldActiveItem.getChildAt(0);
-        oldActiveShape.setImageResource(oldIndex - newIndex > 0 ? R.drawable.onboarding_pager_circle_icon : R.drawable.onboarding_pager_round_icon);
+        if(oldIndex - newIndex > 0){
+            oldActiveShape.setImageResource(
+                    mAppContext.getResources().getIdentifier(
+                            "onboarding_pager_circle_icon", "drawable", mAppContext.getPackageName())
+            );
+        }else{
+            oldActiveShape.setImageResource(
+                    mAppContext.getResources().getIdentifier(
+                            "onboarding_pager_round_icon", "drawable", mAppContext.getPackageName())
+            );
+        }
         Animator oldActiveShapeFadeIn = ObjectAnimator.ofFloat(oldActiveShape, "alpha", 0, PAGER_ICON_SHAPE_ALPHA);
         // add animations
         animations.playTogether(oldItemScaleDown, oldActiveIconFadeOut, oldActiveShapeFadeIn);
-
         // scale up whole new element
         final ViewGroup newActiveItem = (ViewGroup) mPagerIconsContainer.getChildAt(newIndex);
         final LinearLayout.LayoutParams newActiveItemParams = (LinearLayout.LayoutParams) newActiveItem.getLayoutParams();
