@@ -35,36 +35,37 @@ import java.util.ArrayList;
 public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     // scale factor for converting dp to px
-    private final float dpToPixelsScaleFactor;
+    protected final float dpToPixelsScaleFactor;
 
     // main layout parts
-    private final RelativeLayout mRootLayout;
-    private final FrameLayout mContentTextContainer;
-    private final FrameLayout mContentIconContainer;
-    private final FrameLayout mBackgroundContainer;
-    private final LinearLayout mPagerIconsContainer;
+    protected final RelativeLayout mRootLayout;
+    protected final FrameLayout mContentTextContainer;
+    protected final FrameLayout mContentIconContainer;
+    protected final FrameLayout mBackgroundContainer;
+    protected final LinearLayout mPagerIconsContainer;
 
-    private final RelativeLayout mContentRootLayout;
-    private final LinearLayout mContentCenteredContainer;
+    protected final RelativeLayout mContentRootLayout;
+    protected final LinearLayout mContentCenteredContainer;
 
     // application context
-    private final Context mAppContext;
+    protected Context mAppContext;
 
     // state variables
-    private ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
-    private int mActiveElementIndex = 0;
+    protected ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
+    protected int mActiveElementIndex = 0;
 
     // params for Pager position calculations, virtually final, but initializes in onGlobalLayoutListener
-    private int mPagerElementActiveSize;
-    private int mPagerElementNormalSize;
-    private int mPagerElementLeftMargin;
-    private int mPagerElementRightMargin;
+    protected int mPagerElementActiveSize;
+    protected int mPagerElementNormalSize;
+    protected int mPagerElementLeftMargin;
+    protected int mPagerElementRightMargin;
 
     // Listeners
-    private PaperOnboardingOnChangeListener mOnChangeListener;
-    private PaperOnboardingOnRightOutListener mOnRightOutListener;
-    private PaperOnboardingOnLeftOutListener mOnLeftOutListener;
+    protected PaperOnboardingOnChangeListener mOnChangeListener;
+    protected PaperOnboardingOnRightOutListener mOnRightOutListener;
+    protected PaperOnboardingOnLeftOutListener mOnLeftOutListener;
 
+    protected PaperOnboardingPage newElement;
     /**
      * Main constructor for create a Paper Onboarding Engine
      *
@@ -78,19 +79,17 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
         this.mElements.addAll(contentElements);
         this.mAppContext = appContext.getApplicationContext();
-
         mRootLayout = (RelativeLayout) rootLayout;
-        mContentTextContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentTextContainer);
-        mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
-        mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
-        mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
-
+        mContentTextContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingContentTextContainer", "id", appContext.getPackageName()));
+        mContentIconContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingContentIconContainer", "id", appContext.getPackageName()));
+        mBackgroundContainer = (FrameLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingBackgroundContainer", "id", appContext.getPackageName()));
+        mPagerIconsContainer = (LinearLayout)rootLayout.findViewById(appContext.getResources().getIdentifier("onboardingPagerIconsContainer", "id", appContext.getPackageName()));
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
 
         this.dpToPixelsScaleFactor = this.mAppContext.getResources().getDisplayMetrics().density;
 
-        initializeStartingState();
+        initializeStartingState(rootLayout);
 
         mRootLayout.setOnTouchListener(new OnSwipeListener(mAppContext) {
             @Override
@@ -166,8 +165,9 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     /**
      * Initializes starting state
+     * @param rootLayout
      */
-    protected void initializeStartingState() {
+    protected void initializeStartingState(View rootLayout) {
         // Create bottom bar icons for all elements with big first icon
         for (int i = 0; i < mElements.size(); i++) {
             PaperOnboardingPage PaperOnboardingPage = mElements.get(i);
@@ -191,7 +191,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      */
     protected void toggleContent(boolean prev) {
         int oldElementIndex = mActiveElementIndex;
-        PaperOnboardingPage newElement = prev ? toggleToPreviousElement() : toggleToNextElement();
+        newElement = prev ? toggleToPreviousElement() : toggleToNextElement();
 
         if (newElement == null) {
             if (prev && mOnLeftOutListener != null)
@@ -293,7 +293,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param newContentText     newly created and prepared view to display
      * @return animator set with this animation
      */
-    private AnimatorSet createContentTextShowAnimation(final View currentContentText, final View newContentText) {
+    protected AnimatorSet createContentTextShowAnimation(final View currentContentText, final View newContentText) {
         int positionDeltaPx = dpToPixels(CONTENT_TEXT_POS_DELTA_Y_DP);
         AnimatorSet animations = new AnimatorSet();
         Animator currentContentMoveUp = ObjectAnimator.ofFloat(currentContentText, "y", 0, -positionDeltaPx);
@@ -398,14 +398,22 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // fade out old new element icon
         final View oldActiveIcon = oldActiveItem.getChildAt(1);
         Animator oldActiveIconFadeOut = ObjectAnimator.ofFloat(oldActiveIcon, "alpha", 1, 0);
-
         // fade in old element shape
         final ImageView oldActiveShape = (ImageView) oldActiveItem.getChildAt(0);
-        oldActiveShape.setImageResource(oldIndex - newIndex > 0 ? R.drawable.onboarding_pager_circle_icon : R.drawable.onboarding_pager_round_icon);
+        if(oldIndex - newIndex > 0){
+            oldActiveShape.setImageResource(
+                    mAppContext.getResources().getIdentifier(
+                            "onboarding_pager_circle_icon", "drawable", mAppContext.getPackageName())
+            );
+        }else{
+            oldActiveShape.setImageResource(
+                    mAppContext.getResources().getIdentifier(
+                            "onboarding_pager_round_icon", "drawable", mAppContext.getPackageName())
+            );
+        }
         Animator oldActiveShapeFadeIn = ObjectAnimator.ofFloat(oldActiveShape, "alpha", 0, PAGER_ICON_SHAPE_ALPHA);
         // add animations
         animations.playTogether(oldItemScaleDown, oldActiveIconFadeOut, oldActiveShapeFadeIn);
-
         // scale up whole new element
         final ViewGroup newActiveItem = (ViewGroup) mPagerIconsContainer.getChildAt(newIndex);
         final LinearLayout.LayoutParams newActiveItemParams = (LinearLayout.LayoutParams) newActiveItem.getLayoutParams();
