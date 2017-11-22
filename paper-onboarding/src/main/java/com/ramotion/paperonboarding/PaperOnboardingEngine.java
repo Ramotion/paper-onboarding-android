@@ -65,6 +65,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     protected PaperOnboardingOnRightOutListener mOnRightOutListener;
     protected PaperOnboardingOnLeftOutListener mOnLeftOutListener;
 
+    protected PaperOnboardingPage newElement;
     /**
      * Main constructor for create a Paper Onboarding Engine
      *
@@ -88,7 +89,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
         this.dpToPixelsScaleFactor = this.mAppContext.getResources().getDisplayMetrics().density;
 
-        initializeStartingState();
+        initializeStartingState(rootLayout);
 
         mRootLayout.setOnTouchListener(new OnSwipeListener(mAppContext) {
             @Override
@@ -164,8 +165,9 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     /**
      * Initializes starting state
+     * @param rootLayout
      */
-    protected void initializeStartingState() {
+    protected void initializeStartingState(View rootLayout) {
         // Create bottom bar icons for all elements with big first icon
         for (int i = 0; i < mElements.size(); i++) {
             PaperOnboardingPage PaperOnboardingPage = mElements.get(i);
@@ -189,7 +191,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      */
     protected void toggleContent(boolean prev) {
         int oldElementIndex = mActiveElementIndex;
-        PaperOnboardingPage newElement = prev ? toggleToPreviousElement() : toggleToNextElement();
+        newElement = prev ? toggleToPreviousElement() : toggleToNextElement();
 
         if (newElement == null) {
             if (prev && mOnLeftOutListener != null)
@@ -291,7 +293,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param newContentText     newly created and prepared view to display
      * @return animator set with this animation
      */
-    private AnimatorSet createContentTextShowAnimation(final View currentContentText, final View newContentText) {
+    protected AnimatorSet createContentTextShowAnimation(final View currentContentText, final View newContentText) {
         int positionDeltaPx = dpToPixels(CONTENT_TEXT_POS_DELTA_Y_DP);
         AnimatorSet animations = new AnimatorSet();
         Animator currentContentMoveUp = ObjectAnimator.ofFloat(currentContentText, "y", 0, -positionDeltaPx);
