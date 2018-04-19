@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
@@ -48,7 +49,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     private final LinearLayout mContentCenteredContainer;
 
     // application context
-    private final Context mAppContext;
+    private final Context mActivityContext;
 
     // state variables
     private ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
@@ -70,29 +71,30 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      *
      * @param rootLayout      root paper onboarding layout element
      * @param contentElements ordered list of prepared content elements for onboarding
-     * @param appContext      application context
+     * @param activityContext      activity context
      */
-    public PaperOnboardingEngine(View rootLayout, ArrayList<PaperOnboardingPage> contentElements, Context appContext) {
+    @SuppressLint("ClickableViewAccessibility")
+    public PaperOnboardingEngine(View rootLayout, ArrayList<PaperOnboardingPage> contentElements, Context activityContext) {
         if (contentElements == null || contentElements.isEmpty())
             throw new IllegalArgumentException("No content elements provided");
 
         this.mElements.addAll(contentElements);
-        this.mAppContext = appContext.getApplicationContext();
+        this.mActivityContext = activityContext;
 
         mRootLayout = (RelativeLayout) rootLayout;
-        mContentTextContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentTextContainer);
-        mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
-        mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
-        mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
+        mContentTextContainer = rootLayout.findViewById(R.id.onboardingContentTextContainer);
+        mContentIconContainer = rootLayout.findViewById(R.id.onboardingContentIconContainer);
+        mBackgroundContainer = rootLayout.findViewById(R.id.onboardingBackgroundContainer);
+        mPagerIconsContainer = rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
 
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
 
-        this.dpToPixelsScaleFactor = this.mAppContext.getResources().getDisplayMetrics().density;
+        this.dpToPixelsScaleFactor = this.mActivityContext.getResources().getDisplayMetrics().density;
 
         initializeStartingState();
 
-        mRootLayout.setOnTouchListener(new OnSwipeListener(mAppContext) {
+        mRootLayout.setOnTouchListener(new OnSwipeListener(mActivityContext) {
             @Override
             public void onSwipeLeft() {
                 toggleContent(false);
@@ -137,7 +139,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param newActiveElement index of newly active element (from 0)
      * @return new X position for pager bar
      */
-    protected int calculateNewPagerPosition(int newActiveElement) {
+    private int calculateNewPagerPosition(int newActiveElement) {
         newActiveElement++;
         if (newActiveElement <= 0)
             newActiveElement = 1;
@@ -153,7 +155,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param activeElementIndex index of element (from 0)
      * @return array with 2 coordinate values [x,y]
      */
-    protected int[] calculateCurrentCenterCoordinatesOfPagerElement(int activeElementIndex) {
+    private int[] calculateCurrentCenterCoordinatesOfPagerElement(int activeElementIndex) {
         int y = (int) (mPagerIconsContainer.getY() + mPagerIconsContainer.getHeight() / 2);
 
         if (activeElementIndex >= mPagerIconsContainer.getChildCount())
@@ -167,7 +169,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     /**
      * Initializes starting state
      */
-    protected void initializeStartingState() {
+    private void initializeStartingState() {
         // Create bottom bar icons for all elements with big first icon
         for (int i = 0; i < mElements.size(); i++) {
             PaperOnboardingPage PaperOnboardingPage = mElements.get(i);
@@ -177,6 +179,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // Initialize first element on screen
         PaperOnboardingPage activeElement = getActiveElement();
         // initial content texts
+        //noinspection ConstantConditions
         ViewGroup initialContentText = createContentTextView(activeElement);
         mContentTextContainer.addView(initialContentText);
         // initial content icons
@@ -189,7 +192,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     /**
      * @param prev set true to animate onto previous content page (default is false - animating to next content page)
      */
-    protected void toggleContent(boolean prev) {
+    private void toggleContent(boolean prev) {
         int oldElementIndex = mActiveElementIndex;
         PaperOnboardingPage newElement = prev ? toggleToPreviousElement() : toggleToNextElement();
 
@@ -255,8 +258,8 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param color new background color for new
      * @return animator set with background color circular reveal animation
      */
-    protected AnimatorSet createBGAnimatorSet(final int color) {
-        final View bgColorView = new ImageView(mAppContext);
+    private AnimatorSet createBGAnimatorSet(final int color) {
+        final View bgColorView = new ImageView(mActivityContext);
         bgColorView.setLayoutParams(new RelativeLayout.LayoutParams(mRootLayout.getWidth(), mRootLayout.getHeight()));
         bgColorView.setBackgroundColor(color);
         mBackgroundContainer.addView(bgColorView);
@@ -327,7 +330,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param newContentIcon     newly created and prepared view to display
      * @return animator set with this animation
      */
-    protected AnimatorSet createContentIconShowAnimation(final View currentContentIcon, final View newContentIcon) {
+    private AnimatorSet createContentIconShowAnimation(final View currentContentIcon, final View newContentIcon) {
         int positionDeltaPx = dpToPixels(CONTENT_ICON_POS_DELTA_Y_DP);
         AnimatorSet animations = new AnimatorSet();
         Animator currentContentMoveUp = ObjectAnimator.ofFloat(currentContentIcon, "y", 0, -positionDeltaPx);
@@ -357,7 +360,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         return animations;
     }
 
-    protected Animator createContentCenteringVerticalAnimation(View newContentText, View newContentIcon) {
+    private Animator createContentCenteringVerticalAnimation(View newContentText, View newContentIcon) {
         newContentText.measure(View.MeasureSpec.makeMeasureSpec(mContentCenteredContainer.getWidth(), View.MeasureSpec.AT_MOST), -2);
         int measuredContentTextHeight = newContentText.getMeasuredHeight();
         newContentIcon.measure(-2, -2);
@@ -378,7 +381,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param newIndex index of new active icon
      * @return animator set with this animation
      */
-    protected AnimatorSet createPagerIconAnimation(int oldIndex, int newIndex) {
+    private AnimatorSet createPagerIconAnimation(int oldIndex, int newIndex) {
         AnimatorSet animations = new AnimatorSet();
         animations.setDuration(ANIM_PAGER_ICON_TIME);
 
@@ -440,8 +443,8 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @return configured pager icon with selected drawable and selected state (active or inactive)
      */
     @SuppressWarnings("SuspiciousNameCombination")
-    protected ViewGroup createPagerIconElement(int iconDrawableRes, boolean isActive) {
-        LayoutInflater vi = LayoutInflater.from(mAppContext);
+    private ViewGroup createPagerIconElement(int iconDrawableRes, boolean isActive) {
+        LayoutInflater vi = LayoutInflater.from(mActivityContext);
         FrameLayout bottomBarElement = (FrameLayout) vi.inflate(R.layout.onboarding_pager_layout, mPagerIconsContainer, false);
         ImageView elementShape = (ImageView) bottomBarElement.getChildAt(0);
         ImageView elementIcon = (ImageView) bottomBarElement.getChildAt(1);
@@ -463,8 +466,8 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param PaperOnboardingPage new content page to show
      * @return configured view with new content texts
      */
-    protected ViewGroup createContentTextView(PaperOnboardingPage PaperOnboardingPage) {
-        LayoutInflater vi = LayoutInflater.from(mAppContext);
+    private ViewGroup createContentTextView(PaperOnboardingPage PaperOnboardingPage) {
+        LayoutInflater vi = LayoutInflater.from(mActivityContext);
         ViewGroup contentTextView = (ViewGroup) vi.inflate(R.layout.onboarding_text_content_layout, mContentTextContainer, false);
         TextView contentTitle = (TextView) contentTextView.getChildAt(0);
         contentTitle.setText(PaperOnboardingPage.getTitleText());
@@ -477,8 +480,8 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param PaperOnboardingPage new content page to show
      * @return configured view with new content image
      */
-    protected ImageView createContentIconView(PaperOnboardingPage PaperOnboardingPage) {
-        ImageView contentIcon = new ImageView(mAppContext);
+    private ImageView createContentIconView(PaperOnboardingPage PaperOnboardingPage) {
+        ImageView contentIcon = new ImageView(mActivityContext);
         contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
         FrameLayout.LayoutParams iconLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconLP.gravity = Gravity.CENTER;
@@ -498,7 +501,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      *
      * @return content for currently active element
      */
-    protected PaperOnboardingPage getActiveElement() {
+    private PaperOnboardingPage getActiveElement() {
         return mElements.size() > mActiveElementIndex ? mElements.get(mActiveElementIndex) : null;
     }
 
@@ -507,7 +510,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      *
      * @return content for previous element
      */
-    protected PaperOnboardingPage toggleToPreviousElement() {
+    private PaperOnboardingPage toggleToPreviousElement() {
         if (mActiveElementIndex - 1 >= 0) {
             mActiveElementIndex--;
             return mElements.size() > mActiveElementIndex ? mElements.get(mActiveElementIndex) : null;
@@ -520,7 +523,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      *
      * @return content for next element
      */
-    protected PaperOnboardingPage toggleToNextElement() {
+    private PaperOnboardingPage toggleToNextElement() {
         if (mActiveElementIndex + 1 < mElements.size()) {
             mActiveElementIndex++;
             return mElements.size() > mActiveElementIndex ? mElements.get(mActiveElementIndex) : null;
@@ -534,7 +537,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      * @param dpValue value to convert in dp
      * @return converted value in px
      */
-    protected int dpToPixels(int dpValue) {
+    private int dpToPixels(int dpValue) {
         return (int) (dpValue * dpToPixelsScaleFactor + 0.5f);
     }
 

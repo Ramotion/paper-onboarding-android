@@ -1,6 +1,7 @@
 package com.ramotion.paperonboarding;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,17 +39,18 @@ public class PaperOnboardingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            //noinspection unchecked
             mElements = (ArrayList<PaperOnboardingPage>) getArguments().get(ELEMENTS_PARAM);
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.onboarding_main_layout, container, false);
 
         // create engine for onboarding element
-        PaperOnboardingEngine mPaperOnboardingEngine = new PaperOnboardingEngine(view.findViewById(R.id.onboardingRootView), mElements, getActivity().getApplicationContext());
+        PaperOnboardingEngine mPaperOnboardingEngine = new PaperOnboardingEngine(view.findViewById(R.id.onboardingRootView), mElements, getActivity());
         // set listeners
         mPaperOnboardingEngine.setOnChangeListener(mOnChangeListener);
         mPaperOnboardingEngine.setOnLeftOutListener(mOnLeftOutListener);
