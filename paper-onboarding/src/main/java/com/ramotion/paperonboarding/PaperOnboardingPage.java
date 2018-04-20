@@ -7,61 +7,89 @@ import java.io.Serializable;
  */
 public class PaperOnboardingPage implements Serializable {
 
+    private int contentIconRes;
     private String titleText;
     private String descriptionText;
-    private int bgColor;
-    private int contentIconRes;
+    private String slideText;
+    private String buttonText;
     private int bottomBarIconRes;
+    private int bgColor;
+    private int titleColor;
+    private int descriptionColor;
+    private int  sliderVisibility;
+    private int buttonVisibility;
 
     public PaperOnboardingPage() {
     }
 
-    public PaperOnboardingPage(String titleText, String descriptionText, int bgColor, int contentIconRes, int bottomBarIconRes) {
-        this.bgColor = bgColor;
+    public PaperOnboardingPage(
+            int contentIconRes,
+            String titleText,
+            String descriptionText,
+            String slideText,
+            String buttonText,
+            int bottomBarIconRes,
+            int bgColor,
+            int titleColor,
+            int descriptionColor,
+            int sliderVisibility,
+            int buttonVisibility
+    ) {
         this.contentIconRes = contentIconRes;
+        this.titleText = titleText;
+        this.descriptionText = descriptionText;
+        this.slideText = slideText;
+        this.buttonText = buttonText;
         this.bottomBarIconRes = bottomBarIconRes;
-        this.descriptionText = descriptionText;
-        this.titleText = titleText;
-    }
-
-    public String getTitleText() {
-        return titleText;
-    }
-
-    public void setTitleText(String titleText) {
-        this.titleText = titleText;
-    }
-
-    public String getDescriptionText() {
-        return descriptionText;
-    }
-
-    public void setDescriptionText(String descriptionText) {
-        this.descriptionText = descriptionText;
+        this.bgColor = bgColor;
+        this.titleColor = titleColor;
+        this.descriptionColor = descriptionColor;
+        this.sliderVisibility = sliderVisibility;
+        this.buttonVisibility = buttonVisibility;
     }
 
     public int getContentIconRes() {
         return contentIconRes;
     }
 
-    public void setContentIconRes(int contentIconRes) {
-        this.contentIconRes = contentIconRes;
+    public String getTitleText() {
+        return titleText;
+    }
+
+    public String getDescriptionText() {
+        return descriptionText;
+    }
+
+    public String getSlideText() {
+        return slideText;
+    }
+
+    public String getButtonText() {
+        return buttonText;
     }
 
     public int getBottomBarIconRes() {
         return bottomBarIconRes;
     }
 
-    public void setBottomBarIconRes(int bottomBarIconRes) {
-        this.bottomBarIconRes = bottomBarIconRes;
-    }
-
     public int getBgColor() {
         return bgColor;
     }
 
-    public void setBgColor(int bgColor) {
-        this.bgColor = bgColor;
+    public int getTitleColor() {
+        return titleColor;
+    }
+
+    public int getDescriptionColor() {
+        return descriptionColor;
+    }
+
+    public int getSliderVisibility() {
+        return sliderVisibility;
+    }
+
+    public int getButtonVisibility() {
+        return buttonVisibility;
     }
 
     @Override
@@ -93,11 +121,13 @@ public class PaperOnboardingPage implements Serializable {
     @Override
     public String toString() {
         return "PaperOnboardingPage{" +
-                "titleText='" + titleText + '\'' +
+                "contentIconRes=" + contentIconRes +
+                ", titleText='" + titleText  + '\'' +
                 ", descriptionText='" + descriptionText + '\'' +
-                ", bgColor=" + bgColor +
-                ", contentIconRes=" + contentIconRes +
                 ", bottomBarIconRes=" + bottomBarIconRes +
+                ", bgColor=" + bgColor +
+                ", titleColor=" + titleColor +
+                ", descriptionColor=" + descriptionColor +
                 '}';
     }
 }

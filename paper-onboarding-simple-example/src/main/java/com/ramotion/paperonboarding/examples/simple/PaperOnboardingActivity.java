@@ -2,6 +2,7 @@ package com.ramotion.paperonboarding.examples.simple;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ramotion.paperonboarding.PaperOnboardingEngine;
@@ -42,12 +43,45 @@ public class PaperOnboardingActivity extends AppCompatActivity {
     // Just example data for Onboarding
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
         // prepare data
-        PaperOnboardingPage scr1 = new PaperOnboardingPage("Hotels", "All hotels and hostels are sorted by hospitality rating",
-                Color.parseColor("#678FB4"), R.drawable.hotels, R.drawable.key);
-        PaperOnboardingPage scr2 = new PaperOnboardingPage("Banks", "We carefully verify all banks before add them into the app",
-                Color.parseColor("#65B0B4"), R.drawable.banks, R.drawable.wallet);
-        PaperOnboardingPage scr3 = new PaperOnboardingPage("Stores", "All local stores are categorized for your convenience",
-                Color.parseColor("#9B90BC"), R.drawable.stores, R.drawable.shopping_cart);
+        PaperOnboardingPage scr1 = new PaperOnboardingPage(
+                R.drawable.hotels,
+                "Hotels",
+                "All hotels and hostels are sorted by hospitality rating",
+                "Slide to continue",
+                "",
+                R.drawable.key,
+                Color.parseColor("#678FB4"),
+                Color.parseColor("#ffffff"),
+                Color.parseColor("#ffffff"),
+                View.VISIBLE,
+                View.GONE);
+
+        PaperOnboardingPage scr2 = new PaperOnboardingPage(
+                R.drawable.banks,
+                "Banks",
+                "We carefully verify all banks before add them into the app",
+                "",
+                "",
+                R.drawable.wallet,
+                Color.parseColor("#65B0B4"),
+                Color.parseColor("#ffffff"),
+                Color.parseColor("#ffffff"),
+                View.GONE,
+                View.GONE);
+
+
+        PaperOnboardingPage scr3 = new PaperOnboardingPage(
+                R.drawable.stores,
+                "Stores",
+                "All local stores are categorized for your convenience",
+                "",
+                "Let's go!",
+                R.drawable.shopping_cart,
+                Color.parseColor("#9B90BC"),
+                Color.parseColor("#ffffff"),
+                Color.parseColor("#ffffff"),
+                View.GONE,
+                View.VISIBLE);
 
         ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
         elements.add(scr1);

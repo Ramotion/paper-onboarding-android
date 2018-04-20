@@ -2,7 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'signing'
 apply plugin: 'com.bmuschko.nexus'
 apply plugin: "jacoco"
+apply plugin: 'com.github.dcendents.android-maven'
 
+group='com.github.lemonlab'
 group = 'com.ramotion.paperonboarding'
 version = '1.1.3'
 

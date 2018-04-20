@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="activityTheme" parent="AppTheme">
+        <item name="android:textViewStyle">@style/myTextViewStyle</item>
+    </style>
+
+    <style name="myTextViewStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
 </resources>
