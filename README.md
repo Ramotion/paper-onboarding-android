@@ -1,5 +1,6 @@
 ![header](./header.png)
-![Animation](onboarding_preview.gif)
+<img src="https://github.com/Ramotion/paper-onboarding-android/blob/master/onboarding_preview.gif" width="600" height="450" />
+<br><br/>
 
 # Paper Onboarding for Android
 [![CircleCI](https://circleci.com/gh/Ramotion/paper-onboarding-android.svg?style=svg)](https://circleci.com/gh/Ramotion/paper-onboarding-android)
