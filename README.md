@@ -99,6 +99,10 @@ onBoardingFragment.setOnRightOutListener(new PaperOnboardingOnRightOutListener()
 ```
 Currently, there are three listeners that cover all events - onRightOut, onLeftOut and onChange; see code examples and usage in the repo.
 
+<br>
+
+This library is a part of a <a href="https://github.com/Ramotion/android-ui-animation-components-and-libraries"><b>selection of our best UI open-source projects.</b></a>
+
 ## Licence
 ​
 Paper onboarding is released under the MIT license.
