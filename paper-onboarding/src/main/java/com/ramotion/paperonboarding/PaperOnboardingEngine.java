@@ -70,7 +70,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      *
      * @param rootLayout      root paper onboarding layout element
      * @param contentElements ordered list of prepared content elements for onboarding
-     * @param appContext      application context
+     * @param appContext      activity context
      */
     public PaperOnboardingEngine(View rootLayout, ArrayList<PaperOnboardingPage> contentElements, Context appContext) {
         if (contentElements == null || contentElements.isEmpty())
