@@ -2,6 +2,8 @@
 <img src="https://github.com/Ramotion/paper-onboarding-android/blob/master/onboarding_preview.gif" width="600" height="450" />
 <br><br/>
 
+<b>[Get a Free Samsung Clay White Mockup for your next project](https://store.ramotion.com/product/samsung-clay-mockups?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android#demo)</b>
+
 # Paper Onboarding for Android
 [![CircleCI](https://circleci.com/gh/Ramotion/paper-onboarding-android.svg?style=svg)](https://circleci.com/gh/Ramotion/paper-onboarding-android)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ed1eb5c89dfc45eabb80e93c6a124012)](https://www.codacy.com/app/Ramotion/paper-onboarding-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ramotion/paper-onboarding-android&amp;utm_campaign=Badge_Grade)
@@ -18,8 +20,6 @@ This project is maintained by Ramotion, Inc. We specialize in the designing and 
 <a href="https://dev.ramotion.com?utm_source=gthb&utm_medium=repo&utm_campaign=paper-onboarding-android"> 
 <img src="https://github.com/ramotion/gliding-collection/raw/master/contact_our_team@2x.png" width="187" height="34"></a> <br>
 
-
-The [Android mockup](https://store.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android) available [here](https://store.ramotion.com?utm_source=gthb&utm_medium=special&utm_campaign=paper-onboarding-android).
 
 ## Requirements
 ​
@@ -107,6 +107,8 @@ This library is a part of a <a href="https://github.com/Ramotion/android-ui-anim
 ​
 Paper onboarding is released under the MIT license.
 See [LICENSE](./LICENSE) for details.
+
+If you use the open-source library in your project, please make sure to credit and backlink to www.ramotion.com
 
 <br>
 
