@@ -3,7 +3,7 @@
 <a href="https://github.com/Ramotion/paper-onboarding-android">
 <img align="left" src="https://github.com/Ramotion/paper-onboarding-android/blob/master/onboarding_preview.gif" width="480" height="360" /></a>
 
-<p><h1 align="left">PAPER ONBOARDING [JAVA]</h1></p>
+<p><h1 align="left">PAPER ONBOARDING</h1></p>
 
 <h4>Android library Paper Onboarding is a material design UI slider written on Java</h4>
 
