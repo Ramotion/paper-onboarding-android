@@ -4,15 +4,15 @@ apply plugin: 'com.bmuschko.nexus'
 apply plugin: "jacoco"
 
 group = 'com.ramotion.paperonboarding'
-version = '1.1.1'
+version = '1.1.2'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 3
+        targetSdkVersion 28
+        versionCode 4
         versionName version
     }
     buildTypes {
@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -38,9 +38,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
 }
 
 modifyPom {
@@ -70,6 +70,12 @@ modifyPom {
                 id 'oleg-vasiliev'
                 name 'Oleg Vasiliev'
                 email 'oleg-vasiliev@hotmail.com'
+            }
+
+            developer {
+                id 'golovin47'
+                name 'Ivan Golovin'
+                email 'golovinivans@gmail.com'
             }
         }
     }
