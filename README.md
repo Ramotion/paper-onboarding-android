@@ -34,22 +34,22 @@ ___
 
 ## Installation
 ​
-Just download the package from [here](http://central.maven.org/maven2/com/ramotion/paperonboarding/paper-onboarding/1.1.2/paper-onboarding-1.1.2.aar) and add it to your project classpath, or just use the maven repo:
+Just download the package from [here](http://central.maven.org/maven2/com/ramotion/paperonboarding/paper-onboarding/1.1.3/paper-onboarding-1.1.3.aar) and add it to your project classpath, or just use the maven repo:
 ​
 Gradle:
 ```groovy
-'com.ramotion.paperonboarding:paper-onboarding:1.1.2'
+'com.ramotion.paperonboarding:paper-onboarding:1.1.3'
 ```
 SBT:
 ```scala
-libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.1.2"
+libraryDependencies += "com.ramotion.paperonboarding" % "paper-onboarding" % "1.1.3"
 ```
 Maven:
 ```xml
 <dependency>
     <groupId>com.ramotion.paperonboarding</groupId>
     <artifactId>paper-onboarding</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <type>aar</type>
 </dependency>
 ```
