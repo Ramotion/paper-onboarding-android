@@ -25,8 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.ramotion.paperonboarding.listeners.AnimatorEndListener;
 import com.ramotion.paperonboarding.listeners.OnSwipeListener;
 import com.ramotion.paperonboarding.listeners.PaperOnboardingOnChangeListener;
@@ -35,6 +33,8 @@ import com.ramotion.paperonboarding.listeners.PaperOnboardingOnRightOutListener;
 import com.ramotion.paperonboarding.utils.PaperOnboardingEngineDefaults;
 
 import java.util.ArrayList;
+
+import io.supercharge.shimmerlayout.ShimmerLayout;
 
 /**
  * Main Paper Onboarding logic
@@ -50,7 +50,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     protected final FrameLayout mContentIconContainer;
     protected final FrameLayout mBackgroundContainer;
     protected final LinearLayout mPagerIconsContainer;
-    protected final ShimmerFrameLayout shimmerFrame;
+    protected final ShimmerLayout shimmerFrame;
     protected final TextView slideText;
     protected final ImageView sliderIcon;
     protected final Button button;
@@ -207,15 +207,8 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // initial bg color
         mRootLayout.setBackgroundColor(activeElement.getBgColor());
         // animate shimmer textView
-        Shimmer.Builder builder = new Shimmer.Builder() {
-            @Override
-            protected Shimmer.Builder getThis() {
-                return this;
-            }
-        };
-        builder.setRepeatDelay(1400);
-        shimmerFrame.setShimmer(builder.build());
-        shimmerFrame.startShimmer();
+        shimmerFrame.setShimmerAnimationDuration(1400);
+        shimmerFrame.startShimmerAnimation();
     }
 
     /**

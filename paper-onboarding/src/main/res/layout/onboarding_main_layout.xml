@@ -67,7 +67,7 @@
         android:clipToPadding="false"
         android:gravity="bottom">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
+        <io.supercharge.shimmerlayout.ShimmerLayout
             android:id="@+id/shimmer_slide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:textColor="#fff" />
 
-        </com.facebook.shimmer.ShimmerFrameLayout>
+        </io.supercharge.shimmerlayout.ShimmerLayout>
 
         <ImageView
             android:id="@+id/ic_slide"
