@@ -97,7 +97,7 @@
             app:layout_constraintStart_toEndOf="@+id/shimmer_slide"
             app:srcCompat="@mipmap/ic_navigate_before_white_24dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/onboarding_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
