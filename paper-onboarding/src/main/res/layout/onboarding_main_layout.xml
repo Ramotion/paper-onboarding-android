@@ -54,7 +54,7 @@
     </RelativeLayout>
 
     <!-- CUSTOM VIEWS CONTAINER -->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ic_slide" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- PAGER ICONS CONTAINER -->
     <LinearLayout
