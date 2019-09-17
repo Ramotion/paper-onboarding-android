@@ -46,7 +46,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.facebook.shimmer:shimmer:0.4.0@aar'
+    api 'com.facebook.shimmer:shimmer:0.4.0@aar'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
 
