@@ -3,6 +3,9 @@ apply plugin: 'signing'
 apply plugin: 'com.bmuschko.nexus'
 apply plugin: "jacoco"
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 group='com.github.lemonlab'
 group = 'com.ramotion.paperonboarding'
