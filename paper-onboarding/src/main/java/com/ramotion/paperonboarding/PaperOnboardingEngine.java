@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.ramotion.paperonboarding.listeners.AnimatorEndListener;
 import com.ramotion.paperonboarding.listeners.OnSwipeListener;
@@ -206,8 +207,15 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // initial bg color
         mRootLayout.setBackgroundColor(activeElement.getBgColor());
         // animate shimmer textView
+        Shimmer.Builder builder = new Shimmer.Builder() {
+            @Override
+            protected Shimmer.Builder getThis() {
+                return this;
+            }
+        };
+        builder.setRepeatDelay(1400);
+        shimmerFrame.setShimmer(builder.build());
         shimmerFrame.startShimmer();
-
     }
 
     /**
