@@ -206,11 +206,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // initial bg color
         mRootLayout.setBackgroundColor(activeElement.getBgColor());
         // animate shimmer textView
-        shimmerFrame.setAngle(ShimmerFrameLayout.MaskAngle.CW_180);
-        shimmerFrame.setBaseAlpha(0.5f);
-        shimmerFrame.setIntensity(0.5f);
-        shimmerFrame.setRepeatDelay(1400);
-        shimmerFrame.startShimmerAnimation();
+        shimmerFrame.startShimmer();
 
     }
 
