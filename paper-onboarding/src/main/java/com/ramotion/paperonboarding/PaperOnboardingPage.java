@@ -12,16 +12,108 @@ public class PaperOnboardingPage implements Serializable {
     private int bgColor;
     private int contentIconRes;
     private int bottomBarIconRes;
+    private int textColor = 0;
+    private int titleTextSize = 0;
+    private int descTextSize = 0;
+    private int titleTextStyle = 0;
+    private int descTextStyle = 0;
 
-    public PaperOnboardingPage() {
+    public static class Builder {
+        private String titleText;
+        private String descriptionText;
+        private int bgColor;
+        private int contentIconRes;
+        private int bottomBarIconRes;
+        private int textColor = 0;
+        private int titleTextSize = 0;
+        private int descTextSize = 0;
+        private int titleTextStyle = 0;
+        private int descTextStyle = 0;
+
+
+        public Builder(String titleText, String descriptionText) {
+            this.titleText = titleText;
+            this.descriptionText = descriptionText;
+        }
+
+        public Builder backgroundColor(int bgColor) {
+            this.bgColor = bgColor;
+            return this;
+        }
+
+        public Builder contentIconResource(int contentIconRes) {
+            this.contentIconRes = contentIconRes;
+            return this;
+        }
+
+        public Builder bottomBarIconResource(int bottomBarIconRes) {
+            this.bottomBarIconRes = bottomBarIconRes;
+            return this;
+        }
+
+        public Builder textColor(int textColor) {
+            this.textColor = textColor;
+            return this;
+        }
+
+        public Builder titleTextSize(int titleTextSize) {
+            this.titleTextSize = titleTextSize;
+            return this;
+        }
+
+        public Builder descTextSize(int descTextSize) {
+            this.descTextSize = descTextSize;
+            return this;
+        }
+
+        public Builder titleTexStyle(int textStyle) {
+            this.titleTextStyle = textStyle;
+            return this;
+        }
+
+        public Builder descTextStyle(int textStyle) {
+            this.descTextStyle = textStyle;
+            return this;
+        }
+
+        public PaperOnboardingPage build() {
+            return new PaperOnboardingPage(this);
+        }
+
     }
 
-    public PaperOnboardingPage(String titleText, String descriptionText, int bgColor, int contentIconRes, int bottomBarIconRes) {
-        this.bgColor = bgColor;
-        this.contentIconRes = contentIconRes;
-        this.bottomBarIconRes = bottomBarIconRes;
-        this.descriptionText = descriptionText;
-        this.titleText = titleText;
+    private PaperOnboardingPage(Builder builder) {
+        this.titleText = builder.titleText;
+        this.descriptionText = builder.descriptionText;
+        this.bgColor = builder.bgColor;
+        this.contentIconRes = builder.contentIconRes;
+        this.bottomBarIconRes = builder.bottomBarIconRes;
+        this.textColor = builder.textColor;
+        this.titleTextSize = builder.titleTextSize;
+        this.descTextSize = builder.descTextSize;
+        this.titleTextStyle = builder.titleTextStyle;
+        this.descTextStyle = builder.descTextStyle;
+    }
+
+
+    public int getDescTextStyle() {
+        return descTextStyle;
+    }
+
+    public int getDescTextSize() {
+        return descTextSize;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public int getTitleTextSize() {
+        return titleTextSize;
+    }
+
+    public int getTitleTextStyle() {
+        return titleTextStyle;
     }
 
     public String getTitleText() {
