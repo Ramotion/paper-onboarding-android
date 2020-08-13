@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -460,17 +461,64 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     }
 
     /**
-     * @param PaperOnboardingPage new content page to show
+     * @param page new content page to show
      * @return configured view with new content texts
      */
-    protected ViewGroup createContentTextView(PaperOnboardingPage PaperOnboardingPage) {
+    protected ViewGroup createContentTextView(PaperOnboardingPage page) {
         LayoutInflater vi = LayoutInflater.from(mAppContext);
         ViewGroup contentTextView = (ViewGroup) vi.inflate(R.layout.onboarding_text_content_layout, mContentTextContainer, false);
         TextView contentTitle = (TextView) contentTextView.getChildAt(0);
-        contentTitle.setText(PaperOnboardingPage.getTitleText());
+        setTitleText(contentTitle, page);
+
         TextView contentText = (TextView) contentTextView.getChildAt(1);
-        contentText.setText(PaperOnboardingPage.getDescriptionText());
+        setContentText(contentText, page);
         return contentTextView;
+    }
+
+    /**
+     * Apply changes on title-text
+     * @param contentTitle the title-text reference
+     * @param page the changes source
+     */
+    private void setTitleText(TextView contentTitle, PaperOnboardingPage page) {
+        contentTitle.setText(page.getTitleText());
+        if (page.getTitleTextSize() > 0)
+            contentTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, page.getTitleTextSize());
+        if (page.getTextColor() != 0)
+            contentTitle.setTextColor(page.getTextColor());
+        if (page.getTitleTextStyle() != 0)
+            setTextAppearance(contentTitle, page.getTitleTextStyle());
+    }
+
+    /**
+     * Apply changes on content-text
+     * @param contentText the content-text reference
+     * @param page the changes source
+     */
+    private void setContentText(TextView contentText, PaperOnboardingPage page) {
+        contentText.setText(page.getDescriptionText());
+        
+        if (page.getDescTextSize() > 0)
+            contentText.setTextSize(TypedValue.COMPLEX_UNIT_SP, page.getDescTextSize());
+        
+        if (page.getTextColor() != 0)
+            contentText.setTextColor(page.getTextColor());
+        
+        if (page.getDescTextStyle() != 0)
+            setTextAppearance(contentText, page.getDescTextStyle());
+    }
+
+    /**
+     * Set text-appearance for a text-view
+     * @param textView the TextView to change
+     * @param style the Style to set
+     */
+    private void setTextAppearance(TextView textView, int style) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            textView.setTextAppearance(style);
+        } else {
+            textView.setTextAppearance(textView.getContext(), style);
+        }
     }
 
     /**
