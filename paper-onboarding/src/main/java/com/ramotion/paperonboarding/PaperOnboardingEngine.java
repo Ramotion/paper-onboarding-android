@@ -484,10 +484,12 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         contentTitle.setText(page.getTitleText());
         if (page.getTitleTextSize() > 0)
             contentTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, page.getTitleTextSize());
-        if (page.getTextColor() != 0)
-            contentTitle.setTextColor(page.getTextColor());
+        
         if (page.getTitleTextStyle() != 0)
             setTextAppearance(contentTitle, page.getTitleTextStyle());
+        
+        if (page.getTextColor() != 0)
+            contentTitle.setTextColor(page.getTextColor());
     }
 
     /**
@@ -501,11 +503,11 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         if (page.getDescTextSize() > 0)
             contentText.setTextSize(TypedValue.COMPLEX_UNIT_SP, page.getDescTextSize());
         
-        if (page.getTextColor() != 0)
-            contentText.setTextColor(page.getTextColor());
-        
         if (page.getDescTextStyle() != 0)
             setTextAppearance(contentText, page.getDescTextStyle());
+        
+        if (page.getTextColor() != 0)
+            contentText.setTextColor(page.getTextColor());
     }
 
     /**
