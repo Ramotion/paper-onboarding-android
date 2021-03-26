@@ -52,16 +52,27 @@
     </RelativeLayout>
 
     <!-- PAGER ICONS CONTAINER -->
-    <LinearLayout
-        android:id="@+id/onboardingPagerIconsContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+    <HorizontalScrollView
+        android:id="@+id/onboardingPagerLayoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="25dp"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" />
+        android:scrollbars="none"
+        android:layout_marginEnd="54dp"
+        android:layout_marginRight="54dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginLeft="54dp">
+        <LinearLayout
+            android:id="@+id/onboardingPagerIconsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="25dp"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
 
 
 </RelativeLayout>

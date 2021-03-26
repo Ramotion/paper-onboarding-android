@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,6 +48,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
     private final RelativeLayout mContentRootLayout;
     private final LinearLayout mContentCenteredContainer;
+    private final HorizontalScrollView mPagerLayoutContainer;
 
     // application context
     private final Context mAppContext;
@@ -87,6 +90,26 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
 
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
+
+        /* Disable scrolling on scroll view but enable swipe */
+        mPagerLayoutContainer = rootLayout.findViewById(R.id.onboardingPagerLayoutContainer);
+        mPagerLayoutContainer.setOnTouchListener(new OnSwipeListener(mAppContext) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                super.onTouch(v, event);
+                return true;
+            }
+
+            @Override
+            public void onSwipeRight() {
+                toggleContent(true);
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                toggleContent(false);
+            }
+        });
 
         this.dpToPixelsScaleFactor = this.mAppContext.getResources().getDisplayMetrics().density;
 
@@ -144,7 +167,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         int pagerActiveElemCenterPosX = mPagerElementActiveSize / 2
                 + newActiveElement * mPagerElementLeftMargin
                 + (newActiveElement - 1) * (mPagerElementNormalSize + mPagerElementRightMargin);
-        return mRootLayout.getWidth() / 2 - pagerActiveElemCenterPosX;
+        return mPagerLayoutContainer.getWidth() / 2 - pagerActiveElemCenterPosX;
     }
 
     /**
