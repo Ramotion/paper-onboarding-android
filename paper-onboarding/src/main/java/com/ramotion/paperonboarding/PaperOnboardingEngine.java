@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,6 +46,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     private final FrameLayout mContentIconContainer;
     private final FrameLayout mBackgroundContainer;
     private final LinearLayout mPagerIconsContainer;
+    private final FrameLayout mContentButtonContainer;
 
     private final RelativeLayout mContentRootLayout;
     private final LinearLayout mContentCenteredContainer;
@@ -84,6 +88,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
         mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
         mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
+        mContentButtonContainer = rootLayout.findViewById(R.id.onboardingButtonContainer);
 
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
@@ -184,6 +189,10 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         mContentIconContainer.addView(initContentIcon);
         // initial bg color
         mRootLayout.setBackgroundColor(activeElement.getBgColor());
+
+        // Setup Buttons
+        ViewGroup initialContentButtons = createContentButtons(activeElement);
+        mContentButtonContainer.addView(initialContentButtons);
     }
 
     /**
@@ -228,12 +237,18 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         // 6 animate centering of all content
         Animator centerContentAnimation = createContentCenteringVerticalAnimation(newContentText, newContentIcon);
 
+        // 7 animate buttons
+        ViewGroup newContentButton = createContentButtons(newElement);
+        mContentButtonContainer.addView(newContentButton);
+        Animator buttonAnimation = createContentButtonShowAnimation(mContentButtonContainer.getChildAt(mContentButtonContainer.getChildCount() - 2), newContentButton);
+
         centerContentAnimation.start();
         bgAnimation.start();
         pagerMoveAnimation.start();
         pagerIconAnimation.start();
         contentIconShowAnimation.start();
         contentTextShowAnimation.start();
+        buttonAnimation.start();
 
         if (mOnChangeListener != null)
             mOnChangeListener.onPageChanged(oldElementIndex, mActiveElementIndex);
@@ -434,6 +449,28 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         return animations;
     }
 
+    private AnimatorSet createContentButtonShowAnimation(final View currentContentButton, final View newContentButton) {
+        AnimatorSet animations = new AnimatorSet();
+        Animator currentContentFadeOut = ObjectAnimator.ofFloat(currentContentButton, "alpha", 1, 0);
+        currentContentFadeOut.setDuration(ANIM_CONTENT_TEXT_HIDE_TIME);
+        currentContentFadeOut.addListener(new AnimatorEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mContentButtonContainer.removeView(currentContentButton);
+            }
+        });
+        animations.playTogether(currentContentFadeOut);
+
+        Animator newContentFadeIn = ObjectAnimator.ofFloat(newContentButton, "alpha", 0, 1);
+        newContentFadeIn.setDuration(ANIM_CONTENT_TEXT_SHOW_TIME);
+
+        animations.playTogether(newContentFadeIn);
+
+        animations.setInterpolator(new DecelerateInterpolator());
+
+        return animations;
+    }
+
     /**
      * @param iconDrawableRes drawable resource for icon
      * @param isActive        is active element
@@ -484,6 +521,49 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         iconLP.gravity = Gravity.CENTER;
         contentIcon.setLayoutParams(iconLP);
         return contentIcon;
+    }
+
+    protected ViewGroup createContentButtons(PaperOnboardingPage activeElement) {
+        LayoutInflater vi = LayoutInflater.from(mAppContext);
+        ViewGroup contentButtons = (ViewGroup) vi.inflate(R.layout.onboarding_button_layout, mContentButtonContainer, false);
+        Button skipButton = contentButtons.findViewById(R.id.onboardingButtonSkip);
+        skipButton.setText(activeElement.getSkipText());
+        skipButton.setVisibility(activeElement.getShowSkipButton()? View.VISIBLE: View.GONE);
+
+        ImageButton previousButton = contentButtons.findViewById(R.id.onboardingButtonPrevious);
+        previousButton.setVisibility(activeElement.getShowPreviousButton()?View.VISIBLE: View.GONE);
+
+        ImageButton nextButton = contentButtons.findViewById(R.id.onboardingButtonNext);
+        nextButton.setVisibility(activeElement.getShowNextButton()?View.VISIBLE: View.GONE);
+
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnRightOutListener != null)
+                    mOnRightOutListener.onRightOut();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleContent(false);
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleContent(true);
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            previousButton.setImageTintList(ColorStateList.valueOf(activeElement.getPreviousButtonColor()));
+            nextButton.setImageTintList(ColorStateList.valueOf(activeElement.getNextButtonColor()));
+        }
+
+        return contentButtons;
     }
 
     /**

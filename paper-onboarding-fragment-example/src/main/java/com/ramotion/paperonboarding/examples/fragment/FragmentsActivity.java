@@ -43,12 +43,41 @@ public class FragmentsActivity extends AppCompatActivity {
 
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
         // prepare data
-        PaperOnboardingPage scr1 = new PaperOnboardingPage("Hotels", "All hotels and hostels are sorted by hospitality rating",
-                Color.parseColor("#678FB4"), R.drawable.hotels, R.drawable.key);
-        PaperOnboardingPage scr2 = new PaperOnboardingPage("Banks", "We carefully verify all banks before add them into the app",
-                Color.parseColor("#65B0B4"), R.drawable.banks, R.drawable.wallet);
-        PaperOnboardingPage scr3 = new PaperOnboardingPage("Stores", "All local stores are categorized for your convenience",
-                Color.parseColor("#9B90BC"), R.drawable.stores, R.drawable.shopping_cart);
+        PaperOnboardingPage scr1;
+        PaperOnboardingPage.Builder builder = new PaperOnboardingPage.Builder("Hotels", "All hotels and hostels are sorted by hospitality rating")
+                .setSkipText("Skip")
+                .setShowSkipButton(true)
+                .setShowNextButton(true)
+                .setShowPreviousButton(true)
+                .setContentIconRes(R.drawable.hotels)
+                .setBgColor(Color.parseColor("#678FB4"))
+                .setBottomBarIconRes(R.drawable.key);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            builder.setNextButtonColor(Color.RED);
+        }
+        scr1 = builder.create();
+
+
+        PaperOnboardingPage scr2 = new PaperOnboardingPage.Builder("Banks", "We carefully verify all banks before add them into the app")
+                .setSkipText("Skip")
+                .setShowSkipButton(true)
+                .setShowNextButton(true)
+                .setShowPreviousButton(true)
+                .setContentIconRes(R.drawable.banks)
+                .setBgColor(Color.parseColor("#65B0B4"))
+                .setBottomBarIconRes(R.drawable.wallet)
+                .create();
+
+        PaperOnboardingPage scr3 = new PaperOnboardingPage.Builder("Stores", "All local stores are categorized for your convenience")
+                .setSkipText("Skip")
+                .setShowSkipButton(true)
+                .setShowNextButton(true)
+                .setShowPreviousButton(true)
+                .setContentIconRes(R.drawable.stores)
+                .setBgColor(Color.parseColor("#9B90BC"))
+                .setBottomBarIconRes(R.drawable.shopping_cart)
+                .create();
 
         ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
         elements.add(scr1);
