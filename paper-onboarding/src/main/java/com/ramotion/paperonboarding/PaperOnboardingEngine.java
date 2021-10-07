@@ -5,7 +5,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.ramotion.paperonboarding.listeners.PaperOnboardingOnChangeListener;
 import com.ramotion.paperonboarding.listeners.PaperOnboardingOnLeftOutListener;
 import com.ramotion.paperonboarding.listeners.PaperOnboardingOnRightOutListener;
 import com.ramotion.paperonboarding.utils.PaperOnboardingEngineDefaults;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -468,8 +471,56 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         ViewGroup contentTextView = (ViewGroup) vi.inflate(R.layout.onboarding_text_content_layout, mContentTextContainer, false);
         TextView contentTitle = (TextView) contentTextView.getChildAt(0);
         contentTitle.setText(PaperOnboardingPage.getTitleText());
+
+        if (PaperOnboardingPage.getTitleTextColor() != 0) {
+            contentTitle.setTextColor(PaperOnboardingPage.getTitleTextColor());
+        }
+
+        if (PaperOnboardingPage.getTitleTextSize() != 0) {
+            contentTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getTitleTextSize());
+        }
+
+        switch (PaperOnboardingPage.getTitleTextStyle()) {
+            case NORMAL:
+                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                break;
+            case ITALIC:
+                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                break;
+            case BOLD_ITALIC:
+                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                break;
+            case BOLD:
+            default:
+                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        }
+
         TextView contentText = (TextView) contentTextView.getChildAt(1);
         contentText.setText(PaperOnboardingPage.getDescriptionText());
+
+        if (PaperOnboardingPage.getDescriptionTextColor() != 0) {
+            contentText.setTextColor(PaperOnboardingPage.getDescriptionTextColor());
+        }
+
+        if (PaperOnboardingPage.getDescriptionTextSize() != 0) {
+            contentText.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getDescriptionTextSize());
+        }
+
+        switch (PaperOnboardingPage.getDescriptionTextStyle()) {
+            case NORMAL:
+                contentText.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                break;
+            case ITALIC:
+                contentText.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                break;
+            case BOLD_ITALIC:
+                contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                break;
+            case BOLD:
+            default:
+                contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        }
+
         return contentTextView;
     }
 
@@ -479,7 +530,22 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      */
     protected ImageView createContentIconView(PaperOnboardingPage PaperOnboardingPage) {
         ImageView contentIcon = new ImageView(mAppContext);
-        contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
+
+        if (PaperOnboardingPage.getImageUrl() != null) {
+            if (PaperOnboardingPage.getImageUrl().startsWith("http")) {
+                if (PaperOnboardingPage.getImageHeight() != 0 && PaperOnboardingPage.getImageWidth() != 0) {
+                    Picasso.get()
+                            .load(PaperOnboardingPage.getImageUrl())
+                            .resize(dpToPixels(PaperOnboardingPage.getImageWidth()), dpToPixels(PaperOnboardingPage.getImageHeight()))
+                            .into(contentIcon);
+                } else {
+                    Picasso.get().load(PaperOnboardingPage.getImageUrl()).into(contentIcon);
+                }
+            }
+        } else {
+            contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
+        }
+
         FrameLayout.LayoutParams iconLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconLP.gravity = Gravity.CENTER;
         contentIcon.setLayoutParams(iconLP);
