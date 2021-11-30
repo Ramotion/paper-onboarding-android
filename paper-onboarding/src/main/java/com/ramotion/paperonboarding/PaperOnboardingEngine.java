@@ -54,7 +54,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     private final Context mAppContext;
 
     // state variables
-    private ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
+    private final ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
     private int mActiveElementIndex = 0;
 
     // params for Pager position calculations, virtually final, but initializes in onGlobalLayoutListener
@@ -83,10 +83,10 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         this.mAppContext = appContext.getApplicationContext();
 
         mRootLayout = (RelativeLayout) rootLayout;
-        mContentTextContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentTextContainer);
-        mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
-        mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
-        mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
+        mContentTextContainer = rootLayout.findViewById(R.id.onboardingContentTextContainer);
+        mContentIconContainer = rootLayout.findViewById(R.id.onboardingContentIconContainer);
+        mBackgroundContainer = rootLayout.findViewById(R.id.onboardingBackgroundContainer);
+        mPagerIconsContainer = rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
 
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
@@ -105,7 +105,6 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
             public void onSwipeRight() {
                 toggleContent(true);
             }
-
         });
 
         mRootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -127,7 +126,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
                 mPagerElementRightMargin = layoutParams.rightMargin;
 
                 mPagerIconsContainer.setX(calculateNewPagerPosition(0));
-                mContentCenteredContainer.setY((mContentRootLayout.getHeight() - mContentCenteredContainer.getHeight()) / 2);
+                mContentCenteredContainer.setY((mContentRootLayout.getHeight() - mContentCenteredContainer.getHeight()) >> 1);
 
             }
         });
@@ -480,19 +479,23 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
             contentTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getTitleTextSize());
         }
 
-        switch (PaperOnboardingPage.getTitleTextStyle()) {
-            case NORMAL:
-                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
-                break;
-            case ITALIC:
-                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
-                break;
-            case BOLD_ITALIC:
-                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
-                break;
-            case BOLD:
-            default:
-                contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        if (PaperOnboardingPage.getTitleTextStyle() != null) {
+            switch (PaperOnboardingPage.getTitleTextStyle()) {
+                case NORMAL:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                    break;
+                case ITALIC:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                    break;
+                case BOLD_ITALIC:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                    break;
+                case BOLD:
+                default:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+            }
+        } else {
+            contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
         }
 
         TextView contentText = (TextView) contentTextView.getChildAt(1);
@@ -506,21 +509,24 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
             contentText.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getDescriptionTextSize());
         }
 
-        switch (PaperOnboardingPage.getDescriptionTextStyle()) {
-            case NORMAL:
-                contentText.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
-                break;
-            case ITALIC:
-                contentText.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
-                break;
-            case BOLD_ITALIC:
-                contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
-                break;
-            case BOLD:
-            default:
-                contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        if (PaperOnboardingPage.getDescriptionTextStyle() != null) {
+            switch (PaperOnboardingPage.getDescriptionTextStyle()) {
+                case NORMAL:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                    break;
+                case ITALIC:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                    break;
+                case BOLD_ITALIC:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                    break;
+                case BOLD:
+                default:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+            }
+        } else {
+            contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
         }
-
         return contentTextView;
     }
 
@@ -543,6 +549,10 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
                 }
             }
         } else {
+            if (PaperOnboardingPage.getImageHeight() != 0 && PaperOnboardingPage.getImageWidth() != 0) {
+                contentIcon.setMinimumHeight(dpToPixels(PaperOnboardingPage.getImageHeight()));
+                contentIcon.setMinimumWidth(dpToPixels(PaperOnboardingPage.getImageWidth()));
+            }
             contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
         }
 
