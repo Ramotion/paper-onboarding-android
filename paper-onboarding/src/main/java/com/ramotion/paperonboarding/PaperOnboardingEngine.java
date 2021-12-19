@@ -5,7 +5,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.ramotion.paperonboarding.listeners.PaperOnboardingOnChangeListener;
 import com.ramotion.paperonboarding.listeners.PaperOnboardingOnLeftOutListener;
 import com.ramotion.paperonboarding.listeners.PaperOnboardingOnRightOutListener;
 import com.ramotion.paperonboarding.utils.PaperOnboardingEngineDefaults;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,7 +54,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
     private final Context mAppContext;
 
     // state variables
-    private ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
+    private final ArrayList<PaperOnboardingPage> mElements = new ArrayList<>();
     private int mActiveElementIndex = 0;
 
     // params for Pager position calculations, virtually final, but initializes in onGlobalLayoutListener
@@ -80,10 +83,10 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         this.mAppContext = appContext.getApplicationContext();
 
         mRootLayout = (RelativeLayout) rootLayout;
-        mContentTextContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentTextContainer);
-        mContentIconContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingContentIconContainer);
-        mBackgroundContainer = (FrameLayout) rootLayout.findViewById(R.id.onboardingBackgroundContainer);
-        mPagerIconsContainer = (LinearLayout) rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
+        mContentTextContainer = rootLayout.findViewById(R.id.onboardingContentTextContainer);
+        mContentIconContainer = rootLayout.findViewById(R.id.onboardingContentIconContainer);
+        mBackgroundContainer = rootLayout.findViewById(R.id.onboardingBackgroundContainer);
+        mPagerIconsContainer = rootLayout.findViewById(R.id.onboardingPagerIconsContainer);
 
         mContentRootLayout = (RelativeLayout) mRootLayout.getChildAt(1);
         mContentCenteredContainer = (LinearLayout) mContentRootLayout.getChildAt(0);
@@ -102,7 +105,6 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
             public void onSwipeRight() {
                 toggleContent(true);
             }
-
         });
 
         mRootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -124,7 +126,7 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
                 mPagerElementRightMargin = layoutParams.rightMargin;
 
                 mPagerIconsContainer.setX(calculateNewPagerPosition(0));
-                mContentCenteredContainer.setY((mContentRootLayout.getHeight() - mContentCenteredContainer.getHeight()) / 2);
+                mContentCenteredContainer.setY((mContentRootLayout.getHeight() - mContentCenteredContainer.getHeight()) >> 1);
 
             }
         });
@@ -468,8 +470,63 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
         ViewGroup contentTextView = (ViewGroup) vi.inflate(R.layout.onboarding_text_content_layout, mContentTextContainer, false);
         TextView contentTitle = (TextView) contentTextView.getChildAt(0);
         contentTitle.setText(PaperOnboardingPage.getTitleText());
+
+        if (PaperOnboardingPage.getTitleTextColor() != 0) {
+            contentTitle.setTextColor(PaperOnboardingPage.getTitleTextColor());
+        }
+
+        if (PaperOnboardingPage.getTitleTextSize() != 0) {
+            contentTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getTitleTextSize());
+        }
+
+        if (PaperOnboardingPage.getTitleTextStyle() != null) {
+            switch (PaperOnboardingPage.getTitleTextStyle()) {
+                case NORMAL:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                    break;
+                case ITALIC:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                    break;
+                case BOLD_ITALIC:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                    break;
+                case BOLD:
+                default:
+                    contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+            }
+        } else {
+            contentTitle.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        }
+
         TextView contentText = (TextView) contentTextView.getChildAt(1);
         contentText.setText(PaperOnboardingPage.getDescriptionText());
+
+        if (PaperOnboardingPage.getDescriptionTextColor() != 0) {
+            contentText.setTextColor(PaperOnboardingPage.getDescriptionTextColor());
+        }
+
+        if (PaperOnboardingPage.getDescriptionTextSize() != 0) {
+            contentText.setTextSize(TypedValue.COMPLEX_UNIT_SP, PaperOnboardingPage.getDescriptionTextSize());
+        }
+
+        if (PaperOnboardingPage.getDescriptionTextStyle() != null) {
+            switch (PaperOnboardingPage.getDescriptionTextStyle()) {
+                case NORMAL:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.NORMAL);
+                    break;
+                case ITALIC:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.ITALIC);
+                    break;
+                case BOLD_ITALIC:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD_ITALIC);
+                    break;
+                case BOLD:
+                default:
+                    contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+            }
+        } else {
+            contentText.setTypeface(contentTitle.getTypeface(), Typeface.BOLD);
+        }
         return contentTextView;
     }
 
@@ -479,7 +536,26 @@ public class PaperOnboardingEngine implements PaperOnboardingEngineDefaults {
      */
     protected ImageView createContentIconView(PaperOnboardingPage PaperOnboardingPage) {
         ImageView contentIcon = new ImageView(mAppContext);
-        contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
+
+        if (PaperOnboardingPage.getImageUrl() != null) {
+            if (PaperOnboardingPage.getImageUrl().startsWith("http")) {
+                if (PaperOnboardingPage.getImageHeight() != 0 && PaperOnboardingPage.getImageWidth() != 0) {
+                    Picasso.get()
+                            .load(PaperOnboardingPage.getImageUrl())
+                            .resize(dpToPixels(PaperOnboardingPage.getImageWidth()), dpToPixels(PaperOnboardingPage.getImageHeight()))
+                            .into(contentIcon);
+                } else {
+                    Picasso.get().load(PaperOnboardingPage.getImageUrl()).into(contentIcon);
+                }
+            }
+        } else {
+            if (PaperOnboardingPage.getImageHeight() != 0 && PaperOnboardingPage.getImageWidth() != 0) {
+                contentIcon.setMinimumHeight(dpToPixels(PaperOnboardingPage.getImageHeight()));
+                contentIcon.setMinimumWidth(dpToPixels(PaperOnboardingPage.getImageWidth()));
+            }
+            contentIcon.setImageResource(PaperOnboardingPage.getContentIconRes());
+        }
+
         FrameLayout.LayoutParams iconLP = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconLP.gravity = Gravity.CENTER;
         contentIcon.setLayoutParams(iconLP);

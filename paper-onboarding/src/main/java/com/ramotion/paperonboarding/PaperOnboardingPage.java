@@ -1,5 +1,7 @@
 package com.ramotion.paperonboarding;
 
+import com.ramotion.paperonboarding.utils.TextStyle;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,17 @@ public class PaperOnboardingPage implements Serializable {
     private int contentIconRes;
     private int bottomBarIconRes;
 
+    private String imageUrl;
+    private int imageHeight;
+    private int imageWidth;
+
+    private int titleTextColor;
+    private int titleTextSize;
+    private int descriptionTextColor;
+    private int descriptionTextSize;
+    private TextStyle titleTextStyle;
+    private TextStyle descriptionTextStyle;
+
     public PaperOnboardingPage() {
     }
 
@@ -22,6 +35,86 @@ public class PaperOnboardingPage implements Serializable {
         this.bottomBarIconRes = bottomBarIconRes;
         this.descriptionText = descriptionText;
         this.titleText = titleText;
+    }
+
+    public PaperOnboardingPage(String titleText, String descriptionText, String imageUrl, int bgColor, int bottomBarIconRes) {
+        this.titleText = titleText;
+        this.descriptionText = descriptionText;
+        this.bgColor = bgColor;
+        this.bottomBarIconRes = bottomBarIconRes;
+        this.imageUrl = imageUrl;
+    }
+
+    public TextStyle getTitleTextStyle() {
+        return titleTextStyle;
+    }
+
+    public void setTitleTextStyle(TextStyle titleTextStyle) {
+        this.titleTextStyle = titleTextStyle;
+    }
+
+    public TextStyle getDescriptionTextStyle() {
+        return descriptionTextStyle;
+    }
+
+    public void setDescriptionTextStyle(TextStyle descriptionTextStyle) {
+        this.descriptionTextStyle = descriptionTextStyle;
+    }
+
+    public int getTitleTextSize() {
+        return titleTextSize;
+    }
+
+    public void setTitleTextSize(int titleTextSize) {
+        this.titleTextSize = titleTextSize;
+    }
+
+    public int getDescriptionTextSize() {
+        return descriptionTextSize;
+    }
+
+    public void setDescriptionTextSize(int descriptionTextSize) {
+        this.descriptionTextSize = descriptionTextSize;
+    }
+
+    public int getTitleTextColor() {
+        return titleTextColor;
+    }
+
+    public void setTitleTextColor(int titleTextColor) {
+        this.titleTextColor = titleTextColor;
+    }
+
+    public int getDescriptionTextColor() {
+        return descriptionTextColor;
+    }
+
+    public void setDescriptionTextColor(int descriptionTextColor) {
+        this.descriptionTextColor = descriptionTextColor;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public void setImageHeight(int imageHeight) {
+        this.imageHeight = imageHeight;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public void setImageWidth(int imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getTitleText() {
