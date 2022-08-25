@@ -44,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: PaperOnBoardingAPK
-          path: paper-onboarding/build/outputs/apk/debug/**.apk
+          path: paper-onboarding-simple-example/build/outputs/apk/debug/**.apk
